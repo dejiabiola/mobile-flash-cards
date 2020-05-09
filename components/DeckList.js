@@ -30,8 +30,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
+    padding: 30,
   },
   text: {
     borderColor: 'black',
@@ -39,9 +40,6 @@ const styles = StyleSheet.create({
     
     fontSize: 50
   },
-  deckTitle: {
-
-  }
 })
 
 function mapStateToProps(state) {

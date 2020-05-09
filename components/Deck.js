@@ -3,9 +3,9 @@ import { View, Text, StyleSheet } from 'react-native'
 
 export default function Deck() {
   return (
-    <View>
-      <Text>Deck 1</Text>
-      <Text>3 cards</Text>
+    <View style={styles.container}>
+      <Text style={styles.deckTitle}>Deck 1</Text>
+      <Text style={styles.deckCards}>3 cards</Text>
     </View>
   )
 }
@@ -15,13 +15,16 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: 'yellow',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: 400,
+    marginBottom: 30,
   },
   deckTitle: {
-    fontSize: 20,
-    marginBottom: 10
+    fontSize: 30,
+    marginBottom: 1
   },
   deckCards: {
-    fontSize: 10
+    fontSize: 15,
+    color: 'gray'
   }
 })
