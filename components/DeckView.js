@@ -7,12 +7,14 @@ class DeckView extends Component {
   
   addCard = () => {
     this.props.navigation.navigate(
-      'AddCard', {title: this.props.route.params.title}
+      'Add Card', {title: this.props.route.params.title}
     )
   }
 
   startQuiz = () => {
-    alert('You clicked start quiz button')
+    this.props.navigation.navigate(
+      'Quiz', {title: this.props.route.params.title}
+    )
   }
 
   render() {

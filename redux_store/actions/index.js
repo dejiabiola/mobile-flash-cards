@@ -1,4 +1,4 @@
-import { getDecks } from '../../utils/api'
+import { getDecks, getDeckss } from '../../utils/api.js'
 
 export const RECEIVE_DECKS = 'RECEIVE_DECKS'
 export const ADD_DECK = 'ADD_DECK'
@@ -37,7 +37,7 @@ export function removeDeck(title) {
 
 export function handleInitialData() {
   return (dispatch) => {
-    return getDecks.then(decks => {
+    return getDecks().then(decks => {
       dispatch(receive_decks(decks))
     })
   }

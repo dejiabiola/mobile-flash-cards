@@ -7,6 +7,7 @@ import DeckView from '../components/DeckView';
 import { Ionicons, AntDesign } from '@expo/vector-icons'
 import { purple, white } from '../utils/colors';
 import AddCard from '../components/AddCard';
+import QuizView from '../components/QuizView';
 
 const Tabs = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -62,6 +63,7 @@ export default () => (
       title: route.params.title
       })} 
     />
-    <Stack.Screen name="AddCard" component={AddCard} />
+    <Stack.Screen name="Add Card" component={AddCard} />
+    <Stack.Screen name="Quiz" component={QuizView} />
   </Stack.Navigator>
 )

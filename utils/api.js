@@ -6,6 +6,7 @@ export const STORAGE_KEY = 'MobileFlashCards:decks'
 
 export async function getDecks() {
   try {
+    console.log(STORAGE_KEY)
     const result = await AsyncStorage.getItem(STORAGE_KEY)
     if (result === null) {
       AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks))
@@ -16,6 +17,8 @@ export async function getDecks() {
     console.warn('Error occurred getting the decks', error)
   }
 }
+
+
 
 export async function getDeck(id) {
   try {

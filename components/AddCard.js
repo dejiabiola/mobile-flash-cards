@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { darkerPurple } from '../utils/colors'
 import Button from './Button'
 
@@ -17,8 +17,14 @@ class AddCard extends Component {
 
   handleAnswerChange = (value) => {
     this.setState({
-      
+      answer: value
     })
+  }
+
+  handleSubmit = () => {
+    const { question, answer } = this.state
+
+    alert('quiz submitted ' + answer)
   }
 
   render() {
@@ -27,6 +33,7 @@ class AddCard extends Component {
       <View style={styles.container}>
         {title && <Text>{title}</Text>}
         <View style={[styles.block]}>
+            <Text>Enter a New Question</Text>
             <TextInput
               style={styles.input}
               value={this.state.question}
@@ -35,9 +42,11 @@ class AddCard extends Component {
               autoFocus={true}
               returnKeyType="next"
               blurOnSubmit={false}
+              onSubmitEditing={() => this.answerTextInput.focus()}
             />
           </View>
           <View style={[styles.block]}>
+            <Text>Enter the Answer to the Question</Text>
             <TextInput
               style={styles.input}
               value={this.state.answer}
@@ -45,9 +54,14 @@ class AddCard extends Component {
               placeholder="Enter Answer"
               returnKeyType="done"
               onSubmitEditing={this.handleSubmit}
+              ref={input => {
+                this.answerTextInput = input;
+              }}
             />
           </View>
-        <Button onPress={this.onSubmit} style={[styles.deckBtn, {backgroundColor: darkerPurple}]}>
+        <Button onPress={this.handleSubmit} style={[styles.deckBtn, {backgroundColor: darkerPurple}]} 
+          disabled={this.state.question === '' || this.state.answer === ''}
+        >
           Submit
         </Button>
       </View>
@@ -58,8 +72,9 @@ class AddCard extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingTop: 100
   },
   deckBtn: {
     padding: 10,
@@ -78,7 +93,9 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     borderRadius: 5,
     fontSize: 20,
-    height: 40
+    height: 40,
+    width: 300,
+    marginBottom: 30
   }
 })
 
