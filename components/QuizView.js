@@ -1,8 +1,20 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, Animated, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 
 class QuizView extends Component {
+
+  state = {
+    duration: 5000,
+    side: 0,
+    sides: [],
+    progress: new Animated.Value(0),
+    rotation: new Animated.ValueXY({ x: 50, y: 50 }),
+    zoom: new Animated.Value(0),
+    rotateOrientation: "",
+    flipDirection: "y"
+  }
+
   render() {
     const { deck } = this.props
     if (deck.questions.length === 0) {
@@ -19,10 +31,25 @@ class QuizView extends Component {
       )
     }
 
+    
+
 
     return (
-      <View>
-        <Text>Quiz view will be built imminently</Text>
+      <View style={styles.container}>
+        <CardFlip style={styles.cardContainer} ref={card => (this.card = card)}>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={[styles.card, styles.card1]}
+          onPress={() => this.card.flip()}>
+          <Text style={styles.label}>AB</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={[styles.card, styles.card2]}
+          onPress={() => this.card.flip()}>
+          <Text style={styles.label}>CD</Text>
+        </TouchableOpacity>
+      </CardFlip>
       </View>
     )
   }
@@ -45,7 +72,15 @@ const styles = StyleSheet.create({
   emptyText: {
     textAlign: 'center',
     fontSize: 15
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   }
+
 })
+
+
 
 export default connect(mapStateToProps)(QuizView)
