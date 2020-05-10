@@ -32,19 +32,25 @@ class QuizView extends Component {
     if (this.value >= 90) {
       Animated.spring(this.animatedValue, {
         toValue: 0,
-        tension: 10,
+        tension: 90,
         friction: 8,
       }).start();
     } else {
       Animated.spring(this.animatedValue, {
         toValue: 180,
-        tension: 10,
+        tension: 90,
         friction: 8,
       }).start();
     }
   };
 
   handleUserAnswer = (answer) => {
+    if (this.state.cardView === true) {
+      this.flip_Animation()
+      this.setState((oldState) => ({
+        cardView: !oldState.cardView
+      }))
+    }
     if (answer === 'correct') {
       this.setState((oldState) => ({
         correct: oldState.correct + 1,
@@ -68,9 +74,25 @@ class QuizView extends Component {
     })
   }
 
+  setStatesForUserAnswer = () => {
+    
+  }
+
+  handleResetQuiz = () => {
+    this.flip_Animation()
+
+    this.setState(() => ({
+      correct: 0,
+      incorrect: 0,
+      index: 0,
+      questionsCompleted: false
+    }))
+  }
+
   render() {
     const { deck } = this.props
-    const { cardView, questionsCompleted } = this.state
+    const { cardView, questionsCompleted, correct } = this.state
+    // If there is no card in the deck
     if (deck.questions.length === 0) {
       return (
         <View style={styles.emptyContainer} >
@@ -86,10 +108,28 @@ class QuizView extends Component {
 
     }
 
+    // If the users has answered all the cards in the deck
     if (questionsCompleted) {
       return (
-        <View>
-          <Text>All Questions completed</Text>
+        <View style={{flex: 1}}>
+          <Text>You have answered all the questions in this deck</Text>
+          <Text>You scored</Text>
+          <Text>{correct} out of {deck.questions.length}</Text>
+          <Button
+            style={{backgroundColor: 'green', padding: 20, marginBottom: 20, width: "100%", marginTop: 20}}
+            onPress={this.handleResetQuiz}
+          >
+            Restart Quiz
+          </Button>
+          <Button
+            onPress={() => {
+              this.handleResetQuiz
+              this.props.navigation.goBack()
+            }}
+            style={{backgroundColor: 'green', padding: 20, marginBottom: 20, width: "100%", marginTop: 20}}
+          >
+            Back to Deck
+          </Button>
         </View>
       )
     }
@@ -141,12 +181,14 @@ class QuizView extends Component {
                 </View>
                 <View style={{width: 350, marginBottom: -200}}>
                   <Animated.View style={[frontAnimatedStyle, styles.paperFront,{elevation: this.elevationFront}, {opacity: this.frontOpacity}]}>
-                    <Text style={{fontSize: 20,paddingTop: 8, paddingLeft: 8, color: 'black',lineHeight: 20}}>
+                    <Text style={styles.cardTopic}>Question</Text>
+                    <Text style={styles.cardText}>
                       {question.question}
                     </Text>
                   </Animated.View>
                   <Animated.View style={[backAnimatedStyle, styles.paperBack, {elevation: this.elevationBack}, {opacity: this.backOpacity}]}>
-                    <Text style={{fontSize: 20,paddingTop: 8, paddingLeft: 8, color: 'black',lineHeight: 20}}>
+                    <Text style={styles.cardTopic}>Answer</Text>
+                    <Text style={styles.cardText}>
                       {question.answer}
                     </Text>
                   </Animated.View>
@@ -156,7 +198,7 @@ class QuizView extends Component {
           }
         })}
         <TouchableOpacity style={styles.button} onPress={this.handleQuestionAnswerToggle}>
-          <Text style={styles.TextStyle}>{this.state.cardView === false ? 'Check Answer' : 'Check Question'}</Text>
+          <Text style={styles.TextStyle}>{cardView === false ? 'Show Answer' : 'Show Question'}</Text>
         </TouchableOpacity>
         <Button 
           onPress={() => this.handleUserAnswer('correct')}
@@ -215,15 +257,31 @@ const styles = StyleSheet.create({
     height: 300,
     borderRadius: 5,
     marginBottom: 10,
-  
+    padding: 20
   },
   paperBack : {
     top: -310,
     marginHorizontal: 15,
-    backgroundColor: "white",
+    backgroundColor: "yellow",
     height: 300,
     borderRadius: 5,
     marginBottom: -15,
+    padding: 20
+  },
+  cardTopic: {
+    textAlign: 'center',
+    marginBottom: 20,
+    fontWeight: 'bold',
+    fontSize: 20,
+    textDecorationLine: 'underline'
+  },
+  cardText: {
+    fontSize: 20,
+    paddingTop: 8, 
+    paddingLeft: 8, 
+    color: 'black',
+    lineHeight: 20,
+    textAlign: 'center'
   }
 })
 

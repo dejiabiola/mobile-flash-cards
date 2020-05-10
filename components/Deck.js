@@ -14,11 +14,13 @@ export default function Deck(props) {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    backgroundColor: 'yellow',
+    backgroundColor: '#A3C43B',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 400,
+    width: 300,
+    maxWidth: '100%',
     marginBottom: 30,
+    borderRadius: 10
   },
   deckTitle: {
     fontSize: 30,

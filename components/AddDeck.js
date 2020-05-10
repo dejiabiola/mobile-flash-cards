@@ -5,7 +5,7 @@ import { addDeck } from '../redux_store/actions/index'
 import Button from './Button'
 import { darkerPurple } from '../utils/colors'
 import { saveDeckTitle } from '../utils/api'
-import { CommonActions } from '@react-navigation/native';
+import { StackActions } from '@react-navigation/native';
 
 class AddDeckScreen extends Component {
   state = {
@@ -23,17 +23,15 @@ class AddDeckScreen extends Component {
     const { addDeck } = this.props
     addDeck(deckTitle)
     saveDeckTitle(deckTitle)
-    this.toHome()
+    this.toDeck(deckTitle)
     this.setState({
       deckTitle: ''
     })
   }
 
-  toHome = () => {
-    this.props.navigation.dispatch(
-      CommonActions.goBack({
-        key: 'Add Deck',
-      })
+  toDeck = (deckTitle) => {
+    this.props.navigation.navigate(
+      'Deck View', {title: deckTitle}
     )
   }
 

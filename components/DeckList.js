@@ -20,21 +20,24 @@ class DeckList extends Component {
   render() {
     const { decks } = this.props
     return (
-      <View style={styles.container}>
-        {Object.values(decks).map(deck => (
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate(
-              'Deck View', { title: deck.title }
-            )}
-            key={deck.title}
-          >
-            <Deck deck={deck} />
+      <ScrollView style={{flex: 1}}>
+        <View style={styles.container}>
+          {Object.values(decks).map(deck => (
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate(
+                'Deck View', { title: deck.title }
+              )}
+              key={deck.title}
+              style={{flex: 1}}
+            >
+              <Deck deck={deck} />
+            </TouchableOpacity>
+          ))}
+          <TouchableOpacity onPress={this.resetDeck}>
+            <Text>Reset</Text>
           </TouchableOpacity>
-        ))}
-        <TouchableOpacity onPress={this.resetDeck}>
-          <Text>Reset</Text>
-        </TouchableOpacity>
-      </View>
+        </View>
+      </ScrollView>
     )
   }
 }
@@ -42,7 +45,7 @@ class DeckList extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#7C62D0',
     justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 30,
