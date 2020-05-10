@@ -63,13 +63,13 @@ export async function addCardToDeck(title, card) {
   }
 }
 
-export async function removeDeck(title) {
+export async function deleteDeck(title) {
   try {
     const result = await AsyncStorage.getItem(STORAGE_KEY)
     const decks = JSON.parse(result)
     decks[title] = undefined
     delete decks[title]
-    await AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify(decks))
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(decks))
   }
   catch(error) {
     console.warn('Error removing deck from storage', error)
