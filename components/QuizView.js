@@ -1,16 +1,33 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, Image, Animated, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
+import Button from './Button';
 
 class QuizView extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      cardView: false,
+      correct: 0,
+      incorrect: 0,
+      index: 0,
+      questionsCompleted: false
+    }
+
     this.animatedValue = new Animated.Value(0);
     this.value = 0;
     this.animatedValue.addListener(({ value }) => {
       this.value = value;
     });
   }
+
+  handleQuestionAnswerToggle = () => {
+    this.setState((oldState) => ({
+      cardView: !oldState.cardView
+    }))
+    this.flip_Animation()
+  }
+
   flip_Animation = () => {
     if (this.value >= 90) {
       Animated.spring(this.animatedValue, {
@@ -27,8 +44,33 @@ class QuizView extends Component {
     }
   };
 
+  handleUserAnswer = (answer) => {
+    if (answer === 'correct') {
+      this.setState((oldState) => ({
+        correct: oldState.correct + 1,
+      }))
+    } else {
+      this.setState((oldState) => ({
+        incorrect: oldState.incorrect + 1,
+      }))
+    }
+    this.setState((oldState) => ({
+      index: oldState.index + 1
+    }), 
+    () => {
+      const { index } = this.state
+      const { questions } = this.props.deck
+      if (index === questions.length) {
+        this.setState({
+          questionsCompleted: true
+        })
+      }
+    })
+  }
+
   render() {
     const { deck } = this.props
+    const { cardView, questionsCompleted } = this.state
     if (deck.questions.length === 0) {
       return (
         <View style={styles.emptyContainer} >
@@ -42,6 +84,14 @@ class QuizView extends Component {
         </View>
       )
 
+    }
+
+    if (questionsCompleted) {
+      return (
+        <View>
+          <Text>All Questions completed</Text>
+        </View>
+      )
     }
 
     // All the code below are for if there are cards in the deck
@@ -79,31 +129,49 @@ class QuizView extends Component {
     const backAnimatedStyle = {
       transform: [{ rotateY: this.backInterpolate }]
     }
-    
+
     return (
       <View style={styles.MainContainer}>
-        <View style={{width: 350, marginBottom: -200}}>
-          <Animated.View style={[frontAnimatedStyle, styles.paperFront,{elevation: this.elevationFront}, {opacity: this.frontOpacity}]}>
-            <Text style={{fontSize: 20,paddingTop: 8, paddingLeft: 8, color: 'black',lineHeight: 20}}>
-              Here is the question
-            </Text>
-          </Animated.View>
-          <Animated.View style={[backAnimatedStyle, styles.paperBack, {elevation: this.elevationBack}, {opacity: this.backOpacity}]}>
-            <Text style={{fontSize: 20,paddingTop: 8, paddingLeft: 8, color: 'black',lineHeight: 20}}>Here is the answer</Text>
-          </Animated.View>
-        </View>
-        <TouchableOpacity style={styles.button} onPress={this.flip_Animation}>
-          <Text style={styles.TextStyle}> Click Here To Flip The Image </Text>
+        {deck.questions.map((question, index) => {
+          if (this.state.index === index) {
+            return (
+              <View key={index}>
+                <View style={{alignItems: 'flex-start', marginBottom: 10}}>
+                  <Text>{index + 1} / {deck.questions.length}</Text>
+                </View>
+                <View style={{width: 350, marginBottom: -200}}>
+                  <Animated.View style={[frontAnimatedStyle, styles.paperFront,{elevation: this.elevationFront}, {opacity: this.frontOpacity}]}>
+                    <Text style={{fontSize: 20,paddingTop: 8, paddingLeft: 8, color: 'black',lineHeight: 20}}>
+                      {question.question}
+                    </Text>
+                  </Animated.View>
+                  <Animated.View style={[backAnimatedStyle, styles.paperBack, {elevation: this.elevationBack}, {opacity: this.backOpacity}]}>
+                    <Text style={{fontSize: 20,paddingTop: 8, paddingLeft: 8, color: 'black',lineHeight: 20}}>
+                      {question.answer}
+                    </Text>
+                  </Animated.View>
+                </View>
+              </View>
+            )
+          }
+        })}
+        <TouchableOpacity style={styles.button} onPress={this.handleQuestionAnswerToggle}>
+          <Text style={styles.TextStyle}>{this.state.cardView === false ? 'Check Answer' : 'Check Question'}</Text>
         </TouchableOpacity>
+        <Button 
+          onPress={() => this.handleUserAnswer('correct')}
+          style={{backgroundColor: 'green', padding: 20, marginBottom: 20, width: "100%", marginTop: 20}}
+        >
+          Correct
+        </Button>
+        <Button 
+          onPress={() => this.handleUserAnswer('incorrect')}
+          style={{backgroundColor: 'green', padding: 20, marginBottom: 20, width: "100%", marginTop: 20}}
+        >
+          Incorrect
+        </Button>
       </View>
     );
-  }
-}
-
-const mapStateToProps = (state, {route}) => {
-  const {title} = route.params
-  return {
-    deck: state[title]
   }
 }
 
@@ -159,7 +227,12 @@ const styles = StyleSheet.create({
   }
 })
 
-
+const mapStateToProps = (state, {route}) => {
+  const {title} = route.params
+  return {
+    deck: state[title]
+  }
+}
 
 export default connect(mapStateToProps)(QuizView)
 
