@@ -16,11 +16,11 @@ const Stack = createStackNavigator()
 
 const DashBoardTabs = () => (
   <Tabs.Navigator
-    initialRouteName="Decks"
+    initialRouteName="All Decks"
     screenOptions={({route}) => ({
         tabBarIcon: ({color}) => {
           let icon;
-          if (route.name === "Decks") {
+          if (route.name === "All Decks") {
               icon = (
                 <Ionicons name="ios-bookmarks" size={24} color={color} style={{marginBottom: -5}}/>
               );
@@ -51,7 +51,7 @@ const DashBoardTabs = () => (
 
     
   >
-    <Tabs.Screen name="Decks" component={DeckList} />
+    <Tabs.Screen name="All Decks" component={DeckList} />
     <Tabs.Screen name="Add Deck" component={AddDeckScreen} />
   </Tabs.Navigator>
 )
@@ -60,10 +60,10 @@ function getHeaderTitle(route) {
   // Access the tab navigator's state using `route.state`
   const routeName = route.state
     ? route.state.routes[route.state.index].name
-    : route.params?.screen || 'Decks';
+    : route.params?.screen || 'All Decks';
 
   switch (routeName) {
-    case 'Decks':
+    case 'All Decks':
       return 'All Decks';
     case 'Add Deck':
       return 'Add Deck';
