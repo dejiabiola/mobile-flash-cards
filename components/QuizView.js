@@ -4,16 +4,6 @@ import { connect } from 'react-redux'
 
 class QuizView extends Component {
 
-  state = {
-    duration: 5000,
-    side: 0,
-    sides: [],
-    progress: new Animated.Value(0),
-    rotation: new Animated.ValueXY({ x: 50, y: 50 }),
-    zoom: new Animated.Value(0),
-    rotateOrientation: "",
-    flipDirection: "y"
-  }
 
   render() {
     const { deck } = this.props
@@ -31,25 +21,12 @@ class QuizView extends Component {
       )
     }
 
-    
+
 
 
     return (
       <View style={styles.container}>
-        <CardFlip style={styles.cardContainer} ref={card => (this.card = card)}>
-        <TouchableOpacity
-          activeOpacity={1}
-          style={[styles.card, styles.card1]}
-          onPress={() => this.card.flip()}>
-          <Text style={styles.label}>AB</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={1}
-          style={[styles.card, styles.card2]}
-          onPress={() => this.card.flip()}>
-          <Text style={styles.label}>CD</Text>
-        </TouchableOpacity>
-      </CardFlip>
+        
       </View>
     )
   }
