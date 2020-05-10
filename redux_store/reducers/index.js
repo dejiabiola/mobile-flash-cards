@@ -5,7 +5,7 @@ import { decks as allDecks } from "../../utils/_Data";
 export default function decksReducer(state = {}, action) {
   switch(action.type) {
     case RECEIVE_DECKS:
-      const { decks } = actions
+      const { decks } = action
       return {
         ...state,
         ...decks
@@ -29,10 +29,9 @@ export default function decksReducer(state = {}, action) {
         }
       }
     case REMOVE_DECK:
-      const { title } = action
-      const { [title]: value, ...remainingDecks } = state
+      const { [action.title]: value, ...remainingDecks } = state
       return {
-        remainingDecks
+        ...remainingDecks
       }
     case RESET_STORE:
       return allDecks

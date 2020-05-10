@@ -11,14 +11,10 @@ import { handleInitialData } from '../redux_store/actions'
 
  class DeckView extends Component {
 
-  // shouldComponentUpdate(nextProps) {
-  //   return nextProps.deck !== undefined;
-  // }
-  
-  componentWillUnmount() {
-    // Doing this because the decklist does not rerender to show that an object has been deleted from store
-    this.props.receiveDecks()
+  shouldComponentUpdate(nextProps) {
+    return nextProps.deck !== undefined;
   }
+  
   addCard = () => {
     this.props.navigation.navigate(
       'Add Card', {title: this.props.route.params.title}

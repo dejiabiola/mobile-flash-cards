@@ -1,4 +1,4 @@
-import { getDecks, getDeckss } from '../../utils/api.js'
+import { getDecks } from '../../utils/api.js'
 
 export const RECEIVE_DECKS = 'RECEIVE_DECKS'
 export const ADD_DECK = 'ADD_DECK'

@@ -16,7 +16,6 @@ class DeckList extends Component {
     this.props.resetStore()
     resetDecks()
     this.props.receiveDecks()
-    alert("Reset complete")
   }
   render() {
     const { decks } = this.props
