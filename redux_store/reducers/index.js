@@ -1,5 +1,5 @@
 import { RECEIVE_DECKS, ADD_DECK, ADD_CARD, RESET_STORE, REMOVE_DECK } from "../actions";
-import { decks } from "../../utils/_Data";
+import { decks as allDecks } from "../../utils/_Data";
 
 
 export default function decksReducer(state = {}, action) {
@@ -35,7 +35,7 @@ export default function decksReducer(state = {}, action) {
         remainingDecks
       }
     case RESET_STORE:
-      return decks
+      return allDecks
     default: 
       return state
   }
