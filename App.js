@@ -8,10 +8,10 @@ import MainNav from './navigation/navigation'
 
 
 
-function UdaciStatusBar({backgroundColor, ...props}) {
+function AppStatusBar({backgroundColor, ...props}) {
   return (
       <View style={{backgroundColor, height: Constants.statusBarHeight}}>
-          <StatusBar translucent backgroundColor={backgroundColor} {...props}/>
+          <StatusBar translucent backgroundColor={backgroundColor} {...props} barStyle='dark-content'/>
       </View>
   )
 }
@@ -22,7 +22,7 @@ export default function App() {
     <Provider store={store}>
       <View style={{flex: 1}}>
         <NavigationContainer>
-            <UdaciStatusBar backgroundColor={'blue'} barStyle="light-content"/>
+            <AppStatusBar backgroundColor={'white'} barStyle="light-content"/>
             <MainNav/>
         </NavigationContainer>
       </View>
