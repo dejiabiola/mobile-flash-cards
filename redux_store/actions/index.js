@@ -4,23 +4,24 @@ export const RECEIVE_DECKS = 'RECEIVE_DECKS'
 export const ADD_DECK = 'ADD_DECK'
 export const ADD_CARD = 'ADD_CARD'
 export const REMOVE_DECK = 'REMOVE_DECK'
+export const RESET_STORE = 'RESET_STORE'
 
 
-export function receive_decks(decks) {
+export function receiveDecks(decks) {
   return {
     type: RECEIVE_DECKS,
     decks
   }
 }
 
-export function add_deck(title) {
+export function addDeck(title) {
   return {
     type: ADD_DECK,
     title
   }
 }
 
-export function add_card(titleId, card) {
+export function addCard(titleId, card) {
   return {
     type: ADD_CARD,
     titleId,
@@ -35,10 +36,16 @@ export function removeDeck(title) {
   }
 }
 
+export function resetStore() {
+  return {
+    type: RESET_STORE
+  };
+}
+
 export function handleInitialData() {
   return (dispatch) => {
     return getDecks().then(decks => {
-      dispatch(receive_decks(decks))
+      dispatch(receiveDecks(decks))
     })
   }
 }

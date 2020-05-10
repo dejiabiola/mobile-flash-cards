@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native'
 
-export default function Deck() {
+export default function Deck(props) {
+  const { deck } = props
   return (
     <View style={styles.container}>
-      <Text style={styles.deckTitle}>Deck 1</Text>
-      <Text style={styles.deckCards}>3 cards</Text>
+      <Text style={styles.deckTitle}>{deck.title}</Text>
+      <Text style={styles.deckCards}>{deck.questions.length} {deck.questions.length > 1 ? 'cards' : 'card'}</Text>
     </View>
   )
 }

@@ -1,12 +1,12 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import DeckList from '../components/DeckList';
-import AddDeck from '../components/AddDeck';
+import AddDeckScreen from '../components/AddDeck';
 import { createStackNavigator } from '@react-navigation/stack';
 import DeckView from '../components/DeckView';
 import { Ionicons, AntDesign } from '@expo/vector-icons'
 import { purple, white } from '../utils/colors';
-import AddCard from '../components/AddCard';
+import AddCardScreen from '../components/AddCard';
 import QuizView from '../components/QuizView';
 
 const Tabs = createBottomTabNavigator()
@@ -48,22 +48,42 @@ const DashBoardTabs = () => (
           shadowOpacity: 1,
       }
     }}
+
+    
   >
     <Tabs.Screen name="Decks" component={DeckList} />
-    <Tabs.Screen name="Add Deck" component={AddDeck} />
+    <Tabs.Screen name="Add Deck" component={AddDeckScreen} />
   </Tabs.Navigator>
 )
+
+function getHeaderTitle(route) {
+  // Access the tab navigator's state using `route.state`
+  const routeName = route.state
+    ? route.state.routes[route.state.index].name
+    : route.params?.screen || 'Decks';
+
+  switch (routeName) {
+    case 'Decks':
+      return 'All Decks';
+    case 'Add Deck':
+      return 'Add Deck';
+  }
+}
 
 
 
 export default () => (
   <Stack.Navigator>
-    <Stack.Screen name="Home" component={DashBoardTabs} />
+    <Stack.Screen name="Home" component={DashBoardTabs}
+      options={({ route }) => ({
+        headerTitle: getHeaderTitle(route),
+      })}
+    />
     <Stack.Screen name="Deck View" component={DeckView} options={({route}) => ({
       title: route.params.title
       })} 
     />
-    <Stack.Screen name="Add Card" component={AddCard} />
+    <Stack.Screen name="Add Card" component={AddCardScreen} />
     <Stack.Screen name="Quiz" component={QuizView} />
   </Stack.Navigator>
 )

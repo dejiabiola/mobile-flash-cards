@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { darkerPurple } from '../utils/colors'
 import Button from './Button'
+import { addCard } from '../redux_store/actions'
+import { connect } from 'react-redux'
+import { addCardToDeck } from '../utils/api'
 
-class AddCard extends Component {
+class AddCardScreen extends Component {
   state = {
     question: '',
     answer: ''
@@ -23,15 +26,16 @@ class AddCard extends Component {
 
   handleSubmit = () => {
     const { question, answer } = this.state
-
-    alert('quiz submitted ' + answer)
+    const { title } = this.props.route.params
+    this.props.dispatch(addCard(title, {question, answer}))
+    addCardToDeck(title, {question, answer})
+    this.props.navigation.goBack()
   }
 
   render() {
-    const { title } = this.props.route.params
     return (
       <View style={styles.container}>
-        {title && <Text>{title}</Text>}
+
         <View style={[styles.block]}>
             <Text>Enter a New Question</Text>
             <TextInput
@@ -99,4 +103,7 @@ const styles = StyleSheet.create({
   }
 })
 
-export default AddCard
+
+
+
+export default connect()(AddCardScreen)

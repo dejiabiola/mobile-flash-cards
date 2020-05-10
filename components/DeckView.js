@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import Button from './Button';
 import { white, lightGreen, blue } from '../utils/colors';
+import { connect } from 'react-redux';
+import Deck from './Deck'
 
 class DeckView extends Component {
   
@@ -18,10 +20,13 @@ class DeckView extends Component {
   }
 
   render() {
-    const { route } = this.props;
+    const { deck } = this.props;
     return (
       <View style={styles.container}> 
-        {route.params.title && <Text>{route.params.title}</Text>}
+        <View>
+          <Deck deck={deck} />
+        </View>
+
         <Button onPress={this.addCard} style={[styles.deckBtn, {backgroundColor: lightGreen}]}>
           Add Card
         </Button>
@@ -47,4 +52,11 @@ const styles = StyleSheet.create({
   }
 })
 
-export default DeckView
+const mapStateToProps = (state, {route}) => {
+  const {title} = route.params
+  return {
+    deck: state[title]
+  }
+}
+
+export default connect(mapStateToProps)(DeckView)

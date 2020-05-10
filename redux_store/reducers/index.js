@@ -1,7 +1,8 @@
-import { RECEIVE_DECKS, ADD_DECK, ADD_CARD } from "../actions";
+import { RECEIVE_DECKS, ADD_DECK, ADD_CARD, RESET_STORE } from "../actions";
+import { decks } from "../../utils/_Data";
 
 
-export default function decks(state = {}, action) {
+export default function decksReducer(state = {}, action) {
   switch(action.type) {
     case RECEIVE_DECKS:
       return {
@@ -26,6 +27,8 @@ export default function decks(state = {}, action) {
           questions: [...state[titleId].questions].concat(card)
         }
       }
+    case RESET_STORE:
+      return decks
     default: 
       return state
   }

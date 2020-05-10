@@ -1,26 +1,40 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
-import { receive_decks, handleInitialData } from '../redux_store/actions'
+import { handleInitialData, resetStore } from '../redux_store/actions'
 import Deck from './Deck'
 import { ScrollView } from 'react-native-gesture-handler'
+import { resetDecks } from '../utils/api'
 
 
 class DeckList extends Component {
   componentDidMount() {
     this.props.receiveDecks()
   }
+
+  resetDeck = () => {
+    this.props.resetStore()
+    resetDecks()
+    this.props.receiveDecks()
+    alert("Reset complete")
+  }
   render() {
+    const { decks } = this.props
     return (
       <View style={styles.container}>
-        
-        <TouchableOpacity
+        {Object.values(decks).map(deck => (
+          <TouchableOpacity
             onPress={() => this.props.navigation.navigate(
-              'Deck View', { title: 'Deck 1' }
+              'Deck View', { title: deck.title }
             )}
+            key={deck.title}
           >
-            <Deck />
+            <Deck deck={deck} />
           </TouchableOpacity>
+        ))}
+        <TouchableOpacity onPress={this.resetDeck}>
+          <Text>Reset</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -50,7 +64,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    receiveDecks: () => dispatch(handleInitialData())
+    receiveDecks: () => dispatch(handleInitialData()),
+    resetStore: () => dispatch(resetStore())
   }
 }
 
