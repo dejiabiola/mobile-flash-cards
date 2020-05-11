@@ -44,7 +44,7 @@ class AddCardScreen extends Component {
       <View style={styles.container}>
 
         <View style={[styles.block]}>
-            <Text>Enter a New Question</Text>
+            <Text style={styles.label}>Enter a New Question</Text>
             <TextInput
               style={styles.input}
               value={this.state.question}
@@ -57,7 +57,7 @@ class AddCardScreen extends Component {
             />
           </View>
           <View style={[styles.block]}>
-            <Text>Enter the Answer to the Question</Text>
+            <Text style={styles.label}>Enter the Answer to the Question</Text>
             <TextInput
               style={styles.input}
               value={this.state.answer}
@@ -70,7 +70,7 @@ class AddCardScreen extends Component {
               }}
             />
           </View>
-        <Button onPress={this.handleSubmit} style={[styles.deckBtn, {backgroundColor: darkerPurple}]} 
+        <Button onPress={this.handleSubmit} style={[styles.deckBtn, {backgroundColor: darkerPurple, width: 300, padding: 15}]} 
           disabled={this.state.question === '' || this.state.answer === ''}
         >
           Submit
@@ -107,6 +107,10 @@ const styles = StyleSheet.create({
     height: 40,
     width: 300,
     marginBottom: 30
+  },
+  label: {
+    fontSize: 18,
+    marginBottom: 5
   }
 })
 

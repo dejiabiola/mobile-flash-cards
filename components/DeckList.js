@@ -5,6 +5,7 @@ import { handleInitialData, resetStore } from '../redux_store/actions'
 import Deck from './Deck'
 import { ScrollView } from 'react-native-gesture-handler'
 import { resetDecks } from '../utils/api'
+import { mainColor, darkerPurple } from '../utils/colors'
 
 
 class DeckList extends Component {
@@ -34,7 +35,7 @@ class DeckList extends Component {
             </TouchableOpacity>
           ))}
           <TouchableOpacity onPress={this.resetDeck}>
-            <Text>Reset</Text>
+            <Text style={{color: darkerPurple}}>Reset</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -45,7 +46,7 @@ class DeckList extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7C62D0',
+    backgroundColor: mainColor,
     justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 30,
@@ -53,7 +54,6 @@ const styles = StyleSheet.create({
   text: {
     borderColor: 'black',
     borderWidth: 3,
-    
     fontSize: 50
   },
 })

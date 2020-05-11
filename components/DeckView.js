@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Button from './Button';
-import { white, lightGreen, blue } from '../utils/colors';
+import { white, lightGreen, blue, mainColor, darkerPurple } from '../utils/colors';
 import { connect } from 'react-redux';
 import Deck from './Deck'
 import { removeDeck } from '../redux_store/actions';
@@ -39,17 +39,16 @@ import { handleInitialData } from '../redux_store/actions'
     return (
       <View style={styles.container}> 
         <View>
-          <Deck deck={deck} />
+          <Deck deck={deck} style={{height: 300}}/>
         </View>
-
-        <Button onPress={this.addCard} style={[styles.deckBtn, {backgroundColor: lightGreen}]}>
-          Add Card
-        </Button>
         <Button onPress={this.startQuiz} style={[styles.deckBtn, {backgroundColor: blue}]}>
           Start Quiz
         </Button>
+        <Button onPress={this.addCard} style={[styles.deckBtn, {backgroundColor: lightGreen}]}>
+          Add New Card
+        </Button>
         <TouchableOpacity onPress={this.handleRemoveDeck} style={styles.removeBtn}>
-          <Text style={styles.text}>Delete Deck</Text>
+          <Text style={{color: darkerPurple}}>Delete Deck</Text>
         </TouchableOpacity>
       </View>
     )
@@ -59,12 +58,14 @@ import { handleInitialData } from '../redux_store/actions'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: mainColor,
+    paddingTop: 30
   },
   deckBtn: {
-    padding: 10,
-    width: 200,
+    padding: 20,
+    width: 300,
     marginBottom: 30,
     borderRadius: 5
   }

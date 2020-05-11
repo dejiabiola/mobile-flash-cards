@@ -83,7 +83,11 @@ export default () => (
       title: route.params.title
       })} 
     />
-    <Stack.Screen name="Add Card" component={AddCardScreen} />
-    <Stack.Screen name="Quiz" component={QuizView} />
+    <Stack.Screen name="Add Card" component={AddCardScreen} options={({route}) => ({
+      title: "Add Card to " + route.params.title + " Deck"
+      })} />
+    <Stack.Screen name="Quiz" component={QuizView} options={({route}) => ({
+      title: route.params.title + " Quiz"
+      })} />
   </Stack.Navigator>
 )

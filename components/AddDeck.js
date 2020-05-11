@@ -39,7 +39,7 @@ class AddDeckScreen extends Component {
     return (
       <View style={styles.container}>
         <View style={[styles.block]}>
-          <Text>What is the title of your new deck?</Text>
+          <Text style={styles.label}>What is the title of your new deck?</Text>
           <TextInput
             style={styles.input}
             value={this.state.deckTitle}
@@ -50,7 +50,7 @@ class AddDeckScreen extends Component {
             onSubmitEditing={Keyboard.dismiss}
           />
         </View>
-        <Button onPress={this.handleSubmit} style={[styles.deckBtn, {backgroundColor: darkerPurple}]} 
+        <Button onPress={this.handleSubmit} style={[styles.deckBtn, {backgroundColor: darkerPurple, width: 300, padding: 15}]} 
           disabled={this.state.deckTitle === ''}
         >
           Submit
@@ -87,6 +87,10 @@ const styles = StyleSheet.create({
     height: 40,
     width: 300,
     marginBottom: 30
+  },
+  label: {
+    fontSize: 18,
+    marginBottom: 5
   }
 })
 

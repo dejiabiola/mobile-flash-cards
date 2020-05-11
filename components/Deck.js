@@ -2,11 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native'
 
 export default function Deck(props) {
-  const { deck } = props
+  const { deck, style } = props
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <Text style={styles.deckTitle}>{deck.title}</Text>
-      <Text style={styles.deckCards}>{deck.questions.length} {deck.questions.length > 1 ? 'cards' : 'card'}</Text>
+      <Text style={[styles.deckCards]}>{deck.questions.length} {deck.questions.length > 1 ? 'cards' : 'card'}</Text>
     </View>
   )
 }
@@ -23,11 +23,11 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   deckTitle: {
-    fontSize: 30,
-    marginBottom: 1
+    fontSize: 35,
+    marginBottom: 2
   },
   deckCards: {
-    fontSize: 15,
+    fontSize: 18,
     color: 'gray'
   }
 })

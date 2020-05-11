@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, Image, Animated, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import Button from './Button';
+import { mainColor, white, blue, lightGreen, darkerPurple } from '../utils/colors';
 
 class QuizView extends Component {
   constructor(props) {
@@ -45,7 +46,7 @@ class QuizView extends Component {
   };
 
   handleUserAnswer = (answer) => {
-    if (this.state.cardView === true) {
+    if ((this.state.cardView === true) && (this.state.index !== this.props.deck.questions.length - 1)) {
       this.flip_Animation()
       this.setState((oldState) => ({
         cardView: !oldState.cardView
@@ -74,12 +75,14 @@ class QuizView extends Component {
     })
   }
 
-  setStatesForUserAnswer = () => {
-    
-  }
 
   handleResetQuiz = () => {
-    this.flip_Animation()
+    if (this.state.cardView === true) {
+      this.flip_Animation()
+      this.setState((oldState) => ({
+        cardView: !oldState.cardView
+      }))
+    }
 
     this.setState(() => ({
       correct: 0,
@@ -111,12 +114,14 @@ class QuizView extends Component {
     // If the users has answered all the cards in the deck
     if (questionsCompleted) {
       return (
-        <View style={{flex: 1}}>
-          <Text>You have answered all the questions in this deck</Text>
-          <Text>You scored</Text>
-          <Text>{correct} out of {deck.questions.length}</Text>
+        <View style={styles.completedContainer}>
+          <View style={styles.textWrapper}>
+            <Text style={[styles.completedText, {textAlign: 'center'}]}>Congratulations, you have answered all the questions in this deck</Text>
+            <Text style={styles.completedText}>You scored</Text>
+            <Text style={[styles.completedText, styles.finalScore]}>{correct} out of {deck.questions.length}</Text>
+          </View>
           <Button
-            style={{backgroundColor: 'green', padding: 20, marginBottom: 20, width: "100%", marginTop: 20}}
+            style={{backgroundColor: blue, padding: 20, marginBottom: 20, width: 300, marginTop: 20, borderRadius: 10}}
             onPress={this.handleResetQuiz}
           >
             Restart Quiz
@@ -126,7 +131,7 @@ class QuizView extends Component {
               this.handleResetQuiz
               this.props.navigation.goBack()
             }}
-            style={{backgroundColor: 'green', padding: 20, marginBottom: 20, width: "100%", marginTop: 20}}
+            style={{backgroundColor: lightGreen, padding: 20, marginBottom: 20, width: 300, marginTop: 20, borderRadius: 10}}
           >
             Back to Deck
           </Button>
@@ -176,10 +181,11 @@ class QuizView extends Component {
           if (this.state.index === index) {
             return (
               <View key={index}>
-                <View style={{alignItems: 'flex-start', marginBottom: 10}}>
-                  <Text>{index + 1} / {deck.questions.length}</Text>
-                </View>
-                <View style={{width: 350, marginBottom: -200}}>
+                
+                <View style={{width: 350, marginBottom: -300}}>
+                  <View style={{alignItems: 'flex-start', marginBottom: 10, marginLeft: 10}}>
+                    <Text style={{fontSize: 20}}>{index + 1} / {deck.questions.length}</Text>
+                  </View>
                   <Animated.View style={[frontAnimatedStyle, styles.paperFront,{elevation: this.elevationFront}, {opacity: this.frontOpacity}]}>
                     <Text style={styles.cardTopic}>Question</Text>
                     <Text style={styles.cardText}>
@@ -198,17 +204,17 @@ class QuizView extends Component {
           }
         })}
         <TouchableOpacity style={styles.button} onPress={this.handleQuestionAnswerToggle}>
-          <Text style={styles.TextStyle}>{cardView === false ? 'Show Answer' : 'Show Question'}</Text>
+          <Text style={styles.textStyle}>{cardView === false ? 'Show Answer' : 'Show Question'}</Text>
         </TouchableOpacity>
         <Button 
           onPress={() => this.handleUserAnswer('correct')}
-          style={{backgroundColor: 'green', padding: 20, marginBottom: 20, width: "100%", marginTop: 20}}
+          style={{backgroundColor: blue, padding: 20, marginBottom: 15, width: 320, marginTop: 12, borderRadius: 10}}
         >
           Correct
         </Button>
         <Button 
           onPress={() => this.handleUserAnswer('incorrect')}
-          style={{backgroundColor: 'green', padding: 20, marginBottom: 20, width: "100%", marginTop: 20}}
+          style={{backgroundColor: '#F00F60', padding: 20, marginBottom: 15, width: 320, marginTop: 12, borderRadius: 10}}
         >
           Incorrect
         </Button>
@@ -222,7 +228,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20
+    padding: 20,
+    backgroundColor: mainColor
   },
   emptyText: {
     textAlign: 'center',
@@ -232,21 +239,44 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: mainColor
   },
   MainContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: 20
+    paddingTop: 20,
+    backgroundColor: mainColor
+  },
+  completedContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: 20,
+    backgroundColor: mainColor
+  },
+  completedText: {
+    marginBottom: 30,
+    fontSize: 20,
+    textAlign: 'center',
+    color: white,
+  },
+  finalScore: {
+    fontSize: 50
+  },  
+  textWrapper: {
+    width: 300,
+    height: 300,
+    backgroundColor: '#920DF2',
+    padding: 20,
+    borderRadius: 20
   },
   button: {
-    width: '80%',
-    backgroundColor: '#BAF5B5',
     borderRadius: 6,
-    marginTop: 10,
+    padding: 10
   },
-  TextStyle: {
-    color: '#000',
+  textStyle: {
+    color: darkerPurple,
     textAlign: 'center',
     padding: 5,
     fontSize: 18,
@@ -257,12 +287,13 @@ const styles = StyleSheet.create({
     height: 300,
     borderRadius: 5,
     marginBottom: 10,
-    padding: 20
+    padding: 20,
+    backgroundColor: '#2CC5D3'
   },
   paperBack : {
     top: -310,
     marginHorizontal: 15,
-    backgroundColor: "yellow",
+    backgroundColor: "#DA7325",
     height: 300,
     borderRadius: 5,
     marginBottom: -15,
@@ -276,12 +307,12 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline'
   },
   cardText: {
-    fontSize: 20,
+    fontSize: 25,
     paddingTop: 8, 
     paddingLeft: 8, 
     color: 'black',
-    lineHeight: 20,
-    textAlign: 'center'
+    lineHeight: 30,
+    textAlign: 'center',
   }
 })
 
