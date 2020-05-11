@@ -26,9 +26,6 @@ class AddCardScreen extends Component {
 
   handleSubmit = () => {
     const { question, answer } = this.state
-    if (question.length === 0 || answer.length === 0) {
-      return
-    }
     const { title } = this.props.route.params
     this.props.dispatch(addCard(title, {question, answer}))
     addCardToDeck(title, {question, answer})
