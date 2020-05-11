@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
     color: white,
   },
   finalScore: {
-    fontSize: 50
+    fontSize: 50,
   },  
   textWrapper: {
     width: 300,
