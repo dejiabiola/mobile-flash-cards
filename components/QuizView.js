@@ -140,6 +140,7 @@ class QuizView extends Component {
     }
 
     // All the code below are for if there are cards in the deck
+    // Code for card flip was inspired by https://aboutreact.com/react-native-flip-image-horizontally-using-animation/
 
     this.frontInterpolate = this.animatedValue.interpolate({
       inputRange: [0, 180],
