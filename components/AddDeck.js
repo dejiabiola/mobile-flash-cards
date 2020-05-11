@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TextInput, Keyboard, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TextInput, Keyboard } from 'react-native'
 import { connect } from 'react-redux'
 import { addDeck } from '../redux_store/actions/index'
 import Button from './Button'
 import { darkerPurple } from '../utils/colors'
 import { saveDeckTitle } from '../utils/api'
-import { StackActions } from '@react-navigation/native';
 
 class AddDeckScreen extends Component {
   state = {
@@ -93,9 +92,6 @@ const styles = StyleSheet.create({
     marginBottom: 5
   }
 })
-
-
-
 
 
 export default connect(null, { addDeck })(AddDeckScreen)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import Button from './Button';
-import { white, lightGreen, blue, mainColor, darkerPurple } from '../utils/colors';
+import { lightGreen, blue, mainColor, darkerPurple } from '../utils/colors';
 import { connect } from 'react-redux';
 import Deck from './Deck'
 import { removeDeck } from '../redux_store/actions';
